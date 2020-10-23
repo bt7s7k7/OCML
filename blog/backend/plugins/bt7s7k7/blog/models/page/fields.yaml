@@ -20,6 +20,6 @@ fields:
   content:
     label: Content
     type: markdown
-    size: large
+    size: huge
   
 

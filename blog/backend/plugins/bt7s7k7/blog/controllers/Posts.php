@@ -2,6 +2,8 @@
 
 use BackendMenu;
 use Backend\Classes\Controller;
+use Input;
+use Bt7s7k7\Blog\Models\Page;
 
 /**
  * Posts Back-end Controller
@@ -31,5 +33,30 @@ class Posts extends Controller
         parent::__construct();
 
         BackendMenu::setContext('Bt7s7k7.Blog', 'blog', 'posts');
+    }
+
+    public function getSelectedPage()
+    {
+        $selected = null;
+
+        if (Input::has('page')) {
+            $urlId = Input::get('page');
+            if ($urlId != "") {
+                $page = Page::find($urlId);
+                if ($page != null) {
+                    $selected = $page;
+                }
+            }
+        }
+
+        if ($selected == null) {
+            $page = $this->vars['formModel']->pages()->first();
+
+            if ($page != null) {
+                $selected = $page;
+            }
+        }
+
+        return $selected;
     }
 }

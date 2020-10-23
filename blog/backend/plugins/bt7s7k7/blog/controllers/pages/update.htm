@@ -21,9 +21,11 @@
                     data-request-data="redirect:0"
                     data-hotkey="ctrl+s, cmd+s"
                     data-load-indicator="Saving Page..."
+                    <?= Input::has("embed") ? 'data-request-success="console.log(hasSaved())"' : '' ?>
                     class="btn btn-primary">
                     <u>S</u>ave
                 </button>
+                <?php if (!Input::has("embed")): ?>
                 <button
                     type="button"
                     data-request="onSave"
@@ -33,20 +35,48 @@
                     class="btn btn-default">
                     Save and Close
                 </button>
+                <?php endif ?>
                 <button
                     type="button"
                     class="oc-icon-trash-o btn-icon danger pull-right"
                     data-request="onDelete"
                     data-load-indicator="Deleting Page..."
+                    <?= Input::has("embed") ? 'data-request-success="window.parent.location.reload()"' : '' ?>
                     data-request-confirm="Delete this page?">
                 </button>
+                <?php if (!Input::has("embed")): ?>
                 <span class="btn-text">
                     or <a href="<?= Backend::url('bt7s7k7/blog/pages') ?>">Cancel</a>
                 </span>
+                <?php endif ?>
             </div>
         </div>
 
     <?= Form::close() ?>
+
+    <?php if (Input::has("embed")): ?>
+    <style>
+        #layout-canvas>div>div.layout-row.min-size,
+        #layout-body>div>div>div.control-breadcrumb,
+        [data-field-name="id"],
+        [data-field-name="post"],
+        [data-field-name="position"] {
+            display: none;
+        }
+    
+        #layout-body {
+            padding-top: 0;
+        }
+    </style>
+    
+    <script>
+        const labelInput = document.getElementById("Form-field-Page-label")
+
+        function hasSaved() {
+            window.parent.document.querySelector(".page-button.active").innerText = labelInput.value
+        }
+    </script>
+    <?php endif ?>
 
 <?php else: ?>
 

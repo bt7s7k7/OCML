@@ -1,56 +1,123 @@
+<?php 
+    $basePagesURL = Backend::url('bt7s7k7/blog/posts') . '/update/' . $formModel->id . '?page=';
+?>
+
+<?php if (Input::has('page')): ?>
+
 <?php Block::put('breadcrumb') ?>
-    <ul>
-        <li><a href="<?= Backend::url('bt7s7k7/blog/posts') ?>">Posts</a></li>
-        <li><?= e($this->pageTitle) ?></li>
-    </ul>
+<ul>
+    <li><a href="<?= Backend::url('bt7s7k7/blog/posts') ?>">Posts</a></li>
+    <li><a href="<?= Backend::url('bt7s7k7/blog/posts') . '/update/' . $formModel->id ?>"><?= e($this->pageTitle) ?></a></li>
+    <li>Pages</li>
+</ul>
 <?php Block::endPut() ?>
 
 <?php if (!$this->fatalError): ?>
 
-    <?= Form::open(['class' => 'layout']) ?>
+<style>
+    .p-container>.pages {
+        border-left: 1px gray;
+        align-items: stretch;
+        display: flex;
+        flex-direction: column;
+    }
 
-        <div class="layout-row">
-            <?= $this->formRender() ?>
-        </div>
+    .p-container>.pages>.page-button {
+        width: 100%;
+        border: none;
+        border-right: 1px solid gray;
+        padding: 4px;
+        text-align: right;
+        transition: all 0.1s;
+        background: none;
+        outline: none;
+        margin-bottom: 4px;
+        color: black;
+    }
 
-        <div class="form-buttons">
-            <div class="loading-indicator-container">
-                <button
-                    type="submit"
-                    data-request="onSave"
-                    data-request-data="redirect:0"
-                    data-hotkey="ctrl+s, cmd+s"
-                    data-load-indicator="Saving Post..."
-                    class="btn btn-primary">
-                    <u>S</u>ave
-                </button>
-                <button
-                    type="button"
-                    data-request="onSave"
-                    data-request-data="close:1"
-                    data-hotkey="ctrl+enter, cmd+enter"
-                    data-load-indicator="Saving Post..."
-                    class="btn btn-default">
-                    Save and Close
-                </button>
-                <button
-                    type="button"
-                    class="oc-icon-trash-o btn-icon danger pull-right"
-                    data-request="onDelete"
-                    data-load-indicator="Deleting Post..."
-                    data-request-confirm="Delete this post?">
-                </button>
-                <span class="btn-text">
-                    or <a href="<?= Backend::url('bt7s7k7/blog/posts') ?>">Cancel</a>
-                </span>
-            </div>
-        </div>
+    .p-container>.pages>.page-button:hover,
+    .p-container>.pages>.page-button:focus {
+        border-width: 3px;
+    }
 
-    <?= Form::close() ?>
+    .p-container>.pages>.page-button.active {
+        border-width: 3px;
+        border-color: green;
+    }
+
+    .p-container>iframe {
+        border: none;
+    }
+</style>
+
+<?php 
+    $selected = $this->getSelectedPage();
+?>
+
+<div class="flex-layout-row full-height p-container">
+    <div class="pages" id="pagesContainer">
+        <?php foreach($formModel->pages as $page): ?>
+        <a id="page<?= $page->id ?>" class="page-button <?= $page->id == $selected->id ? 'active' : '' ?>" href="<?= $basePagesURL . $page->id ?>">
+            <?= $page->label ?>
+        </a>
+        <?php endforeach ?>
+        <a class=""></a>
+    </div>
+    <iframe class="flex-layout-item stretch frame-container" src="<?= Backend::url('bt7s7k7/blog/pages') . '/update/' . $selected->id . '?embed' ?>" id="pageIframe"></iframe>
+</div>
 
 <?php else: ?>
 
-    <p class="flash-message static error"><?= e($this->fatalError) ?></p>
-    <p><a href="<?= Backend::url('bt7s7k7/blog/posts') ?>" class="btn btn-default">Return to posts list</a></p>
+<p class="flash-message static error"><?= e($this->fatalError) ?></p>
+<p><a href="<?= Backend::url('bt7s7k7/blog/posts') ?>" class="btn btn-default">Return to posts list</a></p>
+
+<?php endif ?>
+
+<?php else: ?>
+
+<?php Block::put('breadcrumb') ?>
+<ul>
+    <li><a href="<?= Backend::url('bt7s7k7/blog/posts') ?>">Posts</a></li>
+    <li><?= e($this->pageTitle) ?></li>
+</ul>
+<?php Block::endPut() ?>
+
+<?php if (!$this->fatalError): ?>
+
+<?= Form::open(['class' => 'layout']) ?>
+
+<div class="layout-row">
+    <div>
+        <?= $this->formRender() ?>
+    </div>
+    <a class="btn btn-success" href="<?= $basePagesURL ?>">
+        Edit pages
+    </a>
+    </div>
+
+<div class="form-buttons">
+    <div class="loading-indicator-container">
+        <button type="submit" data-request="onSave" data-request-data="redirect:0" data-hotkey="ctrl+s, cmd+s" data-load-indicator="Saving Post..." class="btn btn-primary">
+            <u>S</u>ave
+        </button>
+        <button type="button" data-request="onSave" data-request-data="close:1" data-hotkey="ctrl+enter, cmd+enter" data-load-indicator="Saving Post..." class="btn btn-default">
+            Save and Close
+        </button>
+        <button type="button" class="oc-icon-trash-o btn-icon danger pull-right" data-request="onDelete" data-load-indicator="Deleting Post..." data-request-confirm="Delete this post?">
+        </button>
+        <span class="btn-text">
+            or <a href="<?= Backend::url('bt7s7k7/blog/posts') ?>">Cancel</a>
+        </span>
+    </div>
+</div>
+
+<?= Form::close() ?>
+
+<?php else: ?>
+
+<p class="flash-message static error"><?= e($this->fatalError) ?></p>
+<p><a href="<?= Backend::url('bt7s7k7/blog/posts') ?>" class="btn btn-default">Return to posts list</a></p>
+
+<?php endif ?>
 
 <?php endif ?>
