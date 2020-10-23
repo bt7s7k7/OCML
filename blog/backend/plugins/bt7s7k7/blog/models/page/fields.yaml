@@ -1,0 +1,25 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+  id:
+    label: ID
+    disabled: true
+  post: 
+    label: Post
+    # type: number
+    type: relation
+    nameFrom: label
+  position:
+    label: Position
+    type: number
+  label:
+    label: Label
+    type: text
+  content:
+    label: Content
+    type: markdown
+    size: large
+  
+

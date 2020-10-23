@@ -1,0 +1,16 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+  id:
+    label: ID
+    searchable: true
+  label:
+    label: Label
+    type: text
+    searchable: true
+  author_name:
+    label: Author Name
+    type: text
+    searchable: true

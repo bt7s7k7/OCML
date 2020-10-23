@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Page
+
+# Model Form Field configuration
+form: $/bt7s7k7/blog/models/page/fields.yaml
+
+# Model Class name
+modelClass: Bt7s7k7\Blog\Models\Page
+
+# Default redirect location
+defaultRedirect: bt7s7k7/blog/pages
+
+# Create page
+create:
+    title: Create Page
+    redirect: bt7s7k7/blog/pages/update/:id
+    redirectClose: bt7s7k7/blog/pages
+
+# Update page
+update:
+    title: Edit Page
+    redirect: bt7s7k7/blog/pages
+    redirectClose: bt7s7k7/blog/pages
+
+# Preview page
+preview:
+    title: Preview Page
