@@ -6,3 +6,10 @@ columns:
   id:
     label: ID
     searchable: true
+  position:
+    label: Position
+    type: number
+  label:
+    label: Label
+    type: text
+    searchable: true

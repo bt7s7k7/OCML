@@ -2,8 +2,10 @@
 
 use BackendMenu;
 use Backend\Classes\Controller;
-use Input;
 use Bt7s7k7\Blog\Models\Page;
+use Input;
+use Redirect;
+use Backend;
 
 /**
  * Posts Back-end Controller
@@ -15,7 +17,7 @@ class Posts extends Controller
      */
     public $implement = [
         'Backend.Behaviors.FormController',
-        'Backend.Behaviors.ListController'
+        'Backend.Behaviors.ListController',
     ];
 
     /**
@@ -35,7 +37,7 @@ class Posts extends Controller
         BackendMenu::setContext('Bt7s7k7.Blog', 'blog', 'posts');
     }
 
-    public function getSelectedPage()
+    public function getSelectedPageID()
     {
         $selected = null;
 
@@ -44,7 +46,7 @@ class Posts extends Controller
             if ($urlId != "") {
                 $page = Page::find($urlId);
                 if ($page != null) {
-                    $selected = $page;
+                    $selected = $page->id;
                 }
             }
         }
@@ -53,10 +55,40 @@ class Posts extends Controller
             $page = $this->vars['formModel']->pages()->first();
 
             if ($page != null) {
-                $selected = $page;
+                $selected = $page->id;
             }
         }
 
         return $selected;
+    }
+
+    public function getLastPagePosition()
+    {
+        $pages = $this->vars['formModel']->pages;
+        $position = 0;
+
+        if ($pages != null && count($pages) > 0) {
+            $position = $pages[count($pages) - 1]->position;
+        }
+
+        return $position;
+    }
+
+    public function onCreatePage()
+    {
+        $postId = Input::get('postId');
+        $pagePosition = Input::get('position');
+
+        $page = new Page();
+
+        $page->position = $pagePosition;
+        $page->post_id = $postId;
+
+        $page->label = 'New Page';
+        $page->content = 'Write page content here!';
+
+        $page->save();
+
+        return Redirect::to(Backend::url('bt7s7k7/blog/posts') . '/update/' . $postId . '?page=' . $page->id);
     }
 }

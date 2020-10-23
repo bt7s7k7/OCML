@@ -25,7 +25,7 @@
     .p-container>.pages>.page-button {
         width: 100%;
         border: none;
-        border-right: 1px solid gray;
+        border-right: 3px solid gray;
         padding: 4px;
         text-align: right;
         transition: all 0.1s;
@@ -35,13 +35,20 @@
         color: black;
     }
 
-    .p-container>.pages>.page-button:hover,
-    .p-container>.pages>.page-button:focus {
-        border-width: 3px;
+    .p-container>.pages>.add-button {
+        width: 100%;
+        padding: 4px;
+        text-align: center;
+        background: none;
+        outline: none;
+        margin-bottom: 4px;
+        color: black;
+        text-decoration: none;
+        border: none;
+        font-size: large;
     }
 
     .p-container>.pages>.page-button.active {
-        border-width: 3px;
         border-color: green;
     }
 
@@ -51,20 +58,43 @@
 </style>
 
 <?php 
-    $selected = $this->getSelectedPage();
+    $selected = $this->getSelectedPageID();
+    $last = $this->getLastPagePosition();
+
+    echo('<script>const postId = '. $formModel->id .'; const lastPosition = '. $last .';</script>')
 ?>
+
+<?php if ($selected != null): ?>
 
 <div class="flex-layout-row full-height p-container">
     <div class="pages" id="pagesContainer">
         <?php foreach($formModel->pages as $page): ?>
-        <a id="page<?= $page->id ?>" class="page-button <?= $page->id == $selected->id ? 'active' : '' ?>" href="<?= $basePagesURL . $page->id ?>">
+        <a id="page<?= $page->id ?>" class="page-button <?= $page->id == $selected ? 'active' : '' ?>" href="<?= $basePagesURL . $page->id ?>">
             <?= $page->label ?>
         </a>
         <?php endforeach ?>
-        <a class=""></a>
+        <button class="add-button" onclick="createPage()">+</button>
+        </div>
+        <iframe class="flex-layout-item stretch frame-container" src="<?= Backend::url('bt7s7k7/blog/pages') . '/update/' . $selected . '?embed' ?>" id="pageIframe"></iframe>
     </div>
-    <iframe class="flex-layout-item stretch frame-container" src="<?= Backend::url('bt7s7k7/blog/pages') . '/update/' . $selected->id . '?embed' ?>" id="pageIframe"></iframe>
-</div>
+    <?php else: ?>
+    
+    <div class="flex-layout-row layout-fill-container justify-center align-center">
+        <a class="btn btn-success" onclick="createPage()">Create a Page</a>
+    </div>
+    
+    <?php endif ?>
+    
+    <script>
+            function createPage() {
+            	$.request("onCreatePage", {
+            		data: {
+            			postId: postId,
+            			position: lastPosition + 1
+            		}
+            	})
+            }
+    </script>
 
 <?php else: ?>
 
@@ -93,7 +123,7 @@
     <a class="btn btn-success" href="<?= $basePagesURL ?>">
         Edit pages
     </a>
-    </div>
+</div>
 
 <div class="form-buttons">
     <div class="loading-indicator-container">
