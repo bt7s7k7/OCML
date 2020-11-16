@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "incremental": true,
+        "target": "es6",
+        "sourceMap": true,
+        "strict": true,
+        "lib": [
+            "es6"
+        ],
+        "module": "CommonJS",
+        "outDir": "build",
+        "esModuleInterop": true,
+        "preserveSymlinks": true
+    },
+    "include": [
+        "src",
+        "test"
+    ]
+}

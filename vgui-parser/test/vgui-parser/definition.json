@@ -1,0 +1,38 @@
+{
+    "label": "Blog",
+    "server": "/api/v1/",
+    "entities": [
+        {
+            "name": "post",
+            "attributes": {
+                "author_name": {
+                    "type": "string"
+                },
+                "label": {
+                    "type": "string"
+                }
+            }
+        },
+        {
+            "name": "page",
+            "label": "Post Page",
+            "attributes": {
+                "post": {
+                    "type": {
+                        "relation": "belongsTo",
+                        "with": "post"
+                    }
+                },
+                "position": {
+                    "type": "number"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "code"
+                }
+            }
+        }
+    ]
+}
