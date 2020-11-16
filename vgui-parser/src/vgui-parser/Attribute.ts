@@ -1,4 +1,5 @@
 import { CheckValueChain } from "./checkValue";
+import { Entity } from "./Entity";
 import { fromSnakeCase } from "./util";
 
 export abstract class Attribute {
@@ -73,6 +74,18 @@ export namespace Attribute {
         export class Code extends Attribute { }
 
         export abstract class Relation extends Attribute {
+            public get relatesTo() {
+                if (this.relatesToRef) return this.relatesToRef
+                else throw new Error("Relation was not initialized yet")
+            }
+
+            public init(relatesTo: Entity) {
+                this.relatesToRef = relatesTo
+                this.init = () => { throw new Error("Relation was initialized already") }
+            }
+
+            protected relatesToRef: Entity | null = null
+
             constructor(
                 name: string,
                 label: string,

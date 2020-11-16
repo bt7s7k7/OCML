@@ -1,3 +1,4 @@
+import { Attribute } from "./Attribute";
 import { CheckValueChain } from "./checkValue";
 import { Entity } from "./Entity";
 
@@ -7,7 +8,21 @@ export class Definition {
         public readonly label: string,
         public readonly entities: Record<string, Entity> = {},
         public readonly entityList: Entity[] = [],
-    ) { }
+    ) {
+        for (const entity of entityList) {
+            for (const attribute of entity.attributeList) {
+                if (attribute instanceof Attribute.Types.Relation) {
+                    const relatesToName = attribute.relatesToName
+
+                    if (relatesToName in this.entities) {
+                        attribute.init(this.entities[relatesToName])
+                    } else {
+                        throw new Error(`Failed to find entity "${relatesToName}" for relation ${entity.name}/${attribute.name}`)
+                    }
+                }
+            }
+        }
+    }
 
     static fromSource(source: CheckValueChain) {
         let server = ""

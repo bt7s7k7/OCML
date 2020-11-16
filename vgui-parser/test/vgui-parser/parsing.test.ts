@@ -106,7 +106,9 @@ describe("parsing", () => {
                     expect((definition.entities[entity].attributes[name] as Attribute.Types.Relation).relatesToName).be.equal(relatesTo().name)
                 })
 
-                it(`${entity}/${name}: It should have the correct relatesTo`)
+                it(`${entity}/${name}: It should have the correct relatesTo`, () => {
+                    expect((definition.entities[entity].attributes[name] as Attribute.Types.Relation).relatesTo).be.equal(relatesTo())
+                })
             }
         }
     })
