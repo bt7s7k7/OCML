@@ -3,7 +3,7 @@ import { expect } from "chai"
 import { checkValue, CheckValueError } from "../../src/vgui-parser/checkValue"
 import { tracker } from "../testUtil/tracker"
 
-describe("checkValue", () => {
+describe("checkValue()", () => {
     it("Should trigger the correct type callback", () => {
         const triggerTracker = tracker("triggerTracker")
         checkValue("foo")

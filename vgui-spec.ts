@@ -5,7 +5,7 @@ interface Entity {
     attributes: Record<string, Attribute>
 }
 
-interface Attribute {
+type Attribute = PrimitiveType | {
     label?: string
     type: Type
 }

@@ -5,9 +5,7 @@
         {
             "name": "post",
             "attributes": {
-                "author_name": {
-                    "type": "string"
-                },
+                "author_name": "string",
                 "label": {
                     "type": "string"
                 }
@@ -23,15 +21,9 @@
                         "with": "post"
                     }
                 },
-                "position": {
-                    "type": "number"
-                },
-                "label": {
-                    "type": "string"
-                },
-                "content": {
-                    "type": "code"
-                }
+                "position": "number",
+                "label": "string",
+                "content": "code"
             }
         }
     ]
