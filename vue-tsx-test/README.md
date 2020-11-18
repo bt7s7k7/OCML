@@ -23,3 +23,17 @@
    
    Vue.use(VueCompositionAPI)
    ```
+
+Example component:
+```tsx
+import { defineComponent } from '@vue/composition-api';
+
+export const HelloWorld = defineComponent({
+    setup() {
+        // Notice the arrow function
+        return () => (
+            <div>Hello world</div>
+        )
+    }
+})
+```

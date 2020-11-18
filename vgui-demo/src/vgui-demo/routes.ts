@@ -1,14 +1,21 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import { Home } from '../views/Home'
+import { EntityRoute } from './routes/EntityRoute'
+import { HomeRoute } from './routes/HomeRoute'
 
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
     {
         path: '/',
-        name: 'Home',
-        component: Home
+        name: 'HomeRoute',
+        component: HomeRoute
+    },
+    {
+        path: "/entity/:entity",
+        name: "EntityRoute",
+        component: EntityRoute,
+        props: true
     }
 ]
 

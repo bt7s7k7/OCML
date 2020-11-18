@@ -1,19 +1,14 @@
 import { expect } from "chai"
-import { readFileSync } from "fs"
-import { join } from "path"
 import { Attribute } from "../../src/vgui-parser/Attribute"
 import { checkValue } from "../../src/vgui-parser/checkValue"
 import { Definition } from "../../src/vgui-parser/Definition"
+import definitionJSON from "../../src/vgui-parser/definition.json"
 import { Entity } from "../../src/vgui-parser/Entity"
 import { describeMember } from "../testUtil/describeMember"
 
 
 describe("parsing", () => {
-    let definition!: Definition
-    before(() => {
-        const definitionJSON = JSON.parse(readFileSync(join(__dirname, "definition.json")).toString())
-        definition = Definition.fromSource(checkValue(definitionJSON))
-    })
+    const definition = Definition.fromSource(checkValue(definitionJSON))
 
     describeMember(() => Definition, () => {
         it("Should have the correct label", () => {

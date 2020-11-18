@@ -10,7 +10,8 @@
         "module": "CommonJS",
         "outDir": "build",
         "esModuleInterop": true,
-        "preserveSymlinks": true
+        "preserveSymlinks": true,
+        "resolveJsonModule": true
     },
     "include": [
         "src",
