@@ -7,19 +7,21 @@ export abstract class Attribute {
 
     constructor(
         public readonly name: string,
-        public readonly label: string
+        public readonly label: string,
+        public readonly defaultValue: any
     ) { }
 
     static fromSource(name: string, source: CheckValueChain) {
         let label = ""
         let ret: Attribute
+        let defaultValue = null as null | any
 
         const parseType = (t: CheckValueChain) => {
             for (const [key, value] of Object.entries(Attribute.Types)) {
                 if (value == Attribute.Types.Relation) break
                 let ret = null as Attribute | null
                 t = t.equal(key.replace(/^./, v => v.toLowerCase()), (v) => {
-                    ret = new (value as typeof Attribute.Types.String)(name, label)
+                    ret = new (value as typeof Attribute.Types.String)(name, label, defaultValue)
                 })
 
                 if (ret) return ret
@@ -33,7 +35,7 @@ export abstract class Attribute {
                 if (key[0] != key[0].toUpperCase()) break
                 let ret = null as Attribute | null
                 t = t.equal(key.replace(/^./, v => v.toLowerCase()), (v) => {
-                    ret = new (value as typeof Attribute.Types.Relation.BelongsTo)(name, label, relatedName)
+                    ret = new (value as typeof Attribute.Types.Relation.BelongsTo)(name, label, defaultValue, relatedName)
                 })
 
                 if (ret) return ret
@@ -49,6 +51,7 @@ export abstract class Attribute {
             })
             .type("object", (v, t) => {
                 t.child("label").type("string", v => label = v).fallback(() => label = fromSnakeCase(name))
+                t.child("defaultValue").type("string", v => defaultValue = v)
                 t.child("type")
                     .type("string", (v, t) => {
                         ret = parseType(t)
@@ -71,16 +74,16 @@ export abstract class Attribute {
 export namespace Attribute {
     export namespace Types {
         export class String extends Attribute {
-            public makeDefault() { return "" }
+            public makeDefault() { return typeof this.defaultValue == "string" ? this.defaultValue : "" }
         }
         export class Number extends Attribute {
-            public makeDefault() { return 0 }
+            public makeDefault() { return typeof this.defaultValue == "number" ? this.defaultValue : 0 }
         }
         export class Boolean extends Attribute {
-            public makeDefault() { return false }
+            public makeDefault() { return typeof this.defaultValue == "boolean" ? this.defaultValue : false }
         }
         export class Code extends Attribute {
-            public makeDefault() { return "" }
+            public makeDefault() { return typeof this.defaultValue == "string" ? this.defaultValue : "" }
         }
 
         export abstract class Relation extends Attribute {
@@ -103,9 +106,10 @@ export namespace Attribute {
             constructor(
                 name: string,
                 label: string,
+                defaultValue: any,
                 public readonly relatesToName: string
             ) {
-                super(name, label)
+                super(name, label, defaultValue)
             }
         }
 

@@ -22,7 +22,10 @@
                     }
                 },
                 "position": "number",
-                "label": "string",
+                "label": {
+                    "type": "string",
+                    "defaultValue": "New page"
+                },
                 "content": "code"
             }
         }

@@ -41,7 +41,7 @@ describe("parsing", () => {
             defaultValue: {
                 post: null,
                 position: 0,
-                label: "",
+                label: "New page",
                 content: ""
             }
         },
