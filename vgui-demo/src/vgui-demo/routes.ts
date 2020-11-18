@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import { EntityRoute } from './routes/EntityRoute'
+import { EntityCreateRoute } from './routes/EntityCreateRoute'
+import { EntityIndexRoute } from './routes/EntityIndexRoute'
 import { HomeRoute } from './routes/HomeRoute'
 
 Vue.use(VueRouter)
@@ -8,13 +9,16 @@ Vue.use(VueRouter)
 const routes: Array<RouteConfig> = [
     {
         path: '/',
-        name: 'HomeRoute',
         component: HomeRoute
     },
     {
         path: "/entity/:entity",
-        name: "EntityRoute",
-        component: EntityRoute,
+        component: EntityIndexRoute,
+        props: true
+    },
+    {
+        path: "/entity/:entity/create",
+        component: EntityCreateRoute,
         props: true
     }
 ]

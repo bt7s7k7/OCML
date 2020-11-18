@@ -25,20 +25,30 @@ describe("parsing", () => {
         })
     })
 
-    const entityChecks: { name: string, label: string, attributes: string[] }[] = [
+    const entityChecks: { name: string, label: string, attributes: string[], defaultValue: any }[] = [
         {
             name: "post",
             label: "Post",
-            attributes: ["author_name", "label"]
+            attributes: ["author_name", "label"],
+            defaultValue: {
+                author_name: "",
+                label: ""
+            }
         }, {
             name: "page",
             label: "Post Page",
-            attributes: ["post", "position", "label", "content"]
-        }
+            attributes: ["post", "position", "label", "content"],
+            defaultValue: {
+                post: null,
+                position: 0,
+                label: "",
+                content: ""
+            }
+        },
     ]
 
     describeMember(() => Entity, () => {
-        for (const { name, label, attributes } of entityChecks) {
+        for (const { name, label, attributes, defaultValue } of entityChecks) {
             it(`${name}: Should have the correct name`, () => {
                 expect(definition.entities[name].name).to.equal(name)
             })
@@ -50,6 +60,9 @@ describe("parsing", () => {
             it(`${name}: Should have the correct attributes`, () => {
                 expect(definition.entities[name].attributeList).to.have.length(attributes.length)
                 expect(definition.entities[name].attributes).to.have.keys(attributes)
+            })
+            it(`${name}: Should have the correct default value`, () => {
+                expect(definition.entities[name].createDefault()).to.deep.equal(defaultValue)
             })
         }
     })

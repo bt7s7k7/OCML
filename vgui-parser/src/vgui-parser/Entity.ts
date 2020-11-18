@@ -4,7 +4,15 @@ import { fromSnakeCase } from "./util";
 
 export class Entity {
 
+    public createDefault() {
+        const ret = {} as Record<string, any>
 
+        for (const attribute of this.attributeList) {
+            ret[attribute.name] = attribute.makeDefault()
+        }
+
+        return ret
+    }
 
     constructor(
         public readonly name: string,

@@ -3,6 +3,8 @@ import { Entity } from "./Entity";
 import { fromSnakeCase } from "./util";
 
 export abstract class Attribute {
+    public abstract makeDefault(): any
+
     constructor(
         public readonly name: string,
         public readonly label: string
@@ -68,10 +70,18 @@ export abstract class Attribute {
 
 export namespace Attribute {
     export namespace Types {
-        export class String extends Attribute { }
-        export class Number extends Attribute { }
-        export class Boolean extends Attribute { }
-        export class Code extends Attribute { }
+        export class String extends Attribute {
+            public makeDefault() { return "" }
+        }
+        export class Number extends Attribute {
+            public makeDefault() { return 0 }
+        }
+        export class Boolean extends Attribute {
+            public makeDefault() { return false }
+        }
+        export class Code extends Attribute {
+            public makeDefault() { return "" }
+        }
 
         export abstract class Relation extends Attribute {
             public get relatesTo() {
@@ -82,6 +92,10 @@ export namespace Attribute {
             public init(relatesTo: Entity) {
                 this.relatesToRef = relatesTo
                 this.init = () => { throw new Error("Relation was initialized already") }
+            }
+
+            public makeDefault() {
+                return null
             }
 
             protected relatesToRef: Entity | null = null
