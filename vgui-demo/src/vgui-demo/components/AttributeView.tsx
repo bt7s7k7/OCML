@@ -68,7 +68,7 @@ export const AttributeView = defineComponent({
     setup(props, ctx) {
         return () => (
             viewByType.get(props.attribute.constructor)?.(props.attribute, props.data)
-            ?? <pre>[<b>ERR</b>] View for type {props.attribute.constructor.name} not defined</pre>
+            ?? <pre>[<span class="text-danger">ERR</span>] View for type {props.attribute.constructor.name} not defined</pre>
         )
     }
 })
