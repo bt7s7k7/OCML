@@ -13,7 +13,9 @@ class PagesController extends Controller
 
     public function show($id)
     {
-        return Page::findOrFail($id);
+        $page = Page::findOrFail($id);
+        $page->post;
+        return $page;
     }
 
     public function store()

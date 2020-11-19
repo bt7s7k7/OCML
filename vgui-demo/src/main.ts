@@ -3,8 +3,10 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import Vue from 'vue'
+import 'vue-search-select/dist/VueSearchSelect.css'
 import { App } from './vgui-demo/App'
 import router from './vgui-demo/routes'
+
 
 Vue.config.productionTip = false
 

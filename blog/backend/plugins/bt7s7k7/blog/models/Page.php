@@ -22,7 +22,7 @@ class Page extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = ['position', 'label', 'content'];
+    protected $fillable = ['position', 'label', 'content', 'post_id'];
 
     /**
      * @var array Validation rules for attributes

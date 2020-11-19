@@ -24,5 +24,6 @@ export namespace Bridge {
 }
 
 export interface EntityBase {
-    id: string
+    id: string,
+    [index: string]: any
 }

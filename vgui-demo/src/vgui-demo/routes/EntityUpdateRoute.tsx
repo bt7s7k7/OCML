@@ -1,7 +1,7 @@
-import { computed, defineComponent, ref, watch } from '@vue/composition-api';
-import { Bridge } from '../Bridge';
-import { AttributeView } from '../components/AttributeView';
-import { DefinitionProvider } from '../DefinitionProvider';
+import { computed, defineComponent, ref, watch } from '@vue/composition-api'
+import { Bridge } from '../Bridge'
+import { AttributeView } from '../components/AttributeView'
+import { DefinitionProvider } from '../DefinitionProvider'
 
 export const EntityUpdateRoute = defineComponent({
     props: {
@@ -21,7 +21,7 @@ export const EntityUpdateRoute = defineComponent({
         const busy = ref(false)
         const error = ref<null | string>(null)
 
-        watch([props.id, entity.value], async () => {
+        watch(() => props.id, async () => {
             if (props.id) {
                 busy.value = true
                 try {

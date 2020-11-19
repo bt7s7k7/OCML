@@ -114,7 +114,8 @@ export namespace Attribute {
                 label: string,
                 defaultValue: any,
                 isColumn: boolean,
-                public readonly relatesToName: string
+                public readonly relatesToName: string,
+                public readonly fieldName: string = name + "_id"
             ) {
                 super(name, label, defaultValue, isColumn)
             }
