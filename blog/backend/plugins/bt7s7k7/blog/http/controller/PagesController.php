@@ -35,6 +35,8 @@ class PagesController extends Controller
 
         $page->fill($data);
 
+        $page->save();
+
         return $page;
     }
 

@@ -10,6 +10,9 @@ export namespace Bridge {
             async create(data: any) {
                 return await Axios.post<EntityBase>(prefix, data)
             },
+            async update(data: any) {
+                return await Axios.patch<EntityBase>(prefix + "/" + data.id, data)
+            },
             async index() {
                 return await Axios.get<EntityBase[]>(prefix)
             },

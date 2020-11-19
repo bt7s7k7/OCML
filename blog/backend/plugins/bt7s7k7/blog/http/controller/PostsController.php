@@ -33,6 +33,8 @@ class PostsController extends Controller
 
         $post->fill($data);
 
+        $post->save();
+
         return $post;
     }
 

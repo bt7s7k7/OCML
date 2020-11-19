@@ -21,7 +21,7 @@ export const EntityUpdateRoute = defineComponent({
         const busy = ref(false)
         const error = ref<null | string>(null)
 
-        watch(() => props.id, async () => {
+        const refresh = async () => {
             if (props.id) {
                 busy.value = true
                 try {
@@ -34,13 +34,21 @@ export const EntityUpdateRoute = defineComponent({
             } else {
                 data.value = entity.value.createDefault()
             }
-        }, { immediate: true })
+        }
+
+        watch(() => props.id, refresh, { immediate: true })
 
         const submit = async () => {
             busy.value = true
             try {
-                const result = await Bridge.model(entity.value.name).create(data.value)
-                ctx.root.$router.push(`/entity/${entity.value.name}/update/${result.data.id}`)
+                if (props.id != null) {
+                    const result = await Bridge.model(entity.value.name).update(data.value)
+                    data.value = result.data
+                    busy.value = false
+                } else {
+                    const result = await Bridge.model(entity.value.name).create(data.value)
+                    ctx.root.$router.push(`/entity/${entity.value.name}/update/${result.data.id}`)
+                }
             } catch (err) {
                 error.value = err.response.data
             }
