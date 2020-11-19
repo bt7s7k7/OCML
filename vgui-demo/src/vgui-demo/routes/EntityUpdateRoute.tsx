@@ -49,7 +49,7 @@ export const EntityUpdateRoute = defineComponent({
         const deleteEntity = async () => {
             busy.value = true
             try {
-                const result = await Bridge.model(entity.value.name).delete(props.id!)
+                await Bridge.model(entity.value.name).delete(props.id!)
                 ctx.root.$router.push(`/entity/${entity.value.name}`)
             } catch (err) {
                 error.value = err.response.data
