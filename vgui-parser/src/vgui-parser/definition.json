@@ -1,13 +1,17 @@
 {
     "label": "Blog",
-    "server": "/api/v1/",
+    "server": "/api/v1/admin/",
     "entities": [
         {
             "name": "post",
             "attributes": {
-                "author_name": "string",
+                "author_name": {
+                    "type": "string",
+                    "isColumn": true
+                },
                 "label": {
-                    "type": "string"
+                    "type": "string",
+                    "isColumn": true
                 }
             }
         },
@@ -21,10 +25,14 @@
                         "with": "post"
                     }
                 },
-                "position": "number",
                 "label": {
                     "type": "string",
-                    "defaultValue": "New page"
+                    "defaultValue": "New page",
+                    "isColumn": true
+                },
+                "position": {
+                    "type": "number",
+                    "isColumn": true
                 },
                 "content": "code"
             }

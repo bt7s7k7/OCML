@@ -27,6 +27,12 @@ export class Entity {
         let attributes = {} as Entity["attributes"]
         let attributeList = [] as Entity["attributeList"]
 
+        {
+            const idAttribute = new Attribute.Types.ID("id", "ID", null, true)
+            attributes["id"] = idAttribute
+            attributeList.push(idAttribute)
+        }
+
         source.type("object", (v, t) => {
             t.child("name").type("string", v => name = v).throw()
             t.child("label").type("string", v => label = v).fallback(() => label = fromSnakeCase(name))

@@ -17,12 +17,12 @@ class Page extends Model
     /**
      * @var array Guarded fields
      */
-    protected $guarded = ['*'];
+    protected $guarded = [];
 
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = ['position', 'label', 'content'];
 
     /**
      * @var array Validation rules for attributes
@@ -54,7 +54,7 @@ class Page extends Model
      */
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     /**
@@ -64,7 +64,7 @@ class Page extends Model
     public $hasMany = [];
     public $hasOneThrough = [];
     public $hasManyThrough = [];
-    
+
     public $belongsTo = [
         'post' => ['Bt7s7k7\Blog\Models\Post'],
     ];

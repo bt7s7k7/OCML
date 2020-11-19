@@ -17,12 +17,12 @@ class Post extends Model
     /**
      * @var array Guarded fields
      */
-    protected $guarded = ['*'];
+    protected $guarded = [];
 
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = ['author_name', 'label'];
 
     /**
      * @var array Validation rules for attributes

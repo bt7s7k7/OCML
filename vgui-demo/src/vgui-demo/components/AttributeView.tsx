@@ -2,6 +2,21 @@ import { Attribute } from '@/vgui-parser/Attribute'
 import { defineComponent, PropType, Ref } from '@vue/composition-api'
 
 const viewByType = new Map<Function, (attribute: Attribute, data: Ref<any>) => JSX.Element>([
+    [Attribute.Types.ID, (attribute, data) => {
+        return (
+            <b-form-group
+                label={attribute.label}
+                label-for={attribute.name}
+            >
+                <b-form-input
+                    id={attribute.name}
+                    value={data.value[attribute.name]}
+                    readonly
+                    required
+                ></b-form-input>
+            </b-form-group>
+        )
+    }],
     [Attribute.Types.String, (attribute, data) => {
         return (
             <b-form-group

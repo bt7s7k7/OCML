@@ -16,7 +16,7 @@ describe("parsing", () => {
         })
 
         it("Should have the correct server", () => {
-            expect(definition.server).to.equal("/api/v1/")
+            expect(definition.server).to.equal("/api/v1/admin/")
         })
 
         it("Should have the right entities", () => {
@@ -29,16 +29,18 @@ describe("parsing", () => {
         {
             name: "post",
             label: "Post",
-            attributes: ["author_name", "label"],
+            attributes: ["id", "author_name", "label"],
             defaultValue: {
+                id: "N/A",
                 author_name: "",
                 label: ""
             }
         }, {
             name: "page",
             label: "Post Page",
-            attributes: ["post", "position", "label", "content"],
+            attributes: ["id", "post", "position", "label", "content"],
             defaultValue: {
+                id: "N/A",
                 post: null,
                 position: 0,
                 label: "New page",

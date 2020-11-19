@@ -2,7 +2,8 @@ export interface TypeNames {
     string: string,
     number: number,
     object: Record<string, any>,
-    array: any[]
+    array: any[],
+    boolean: boolean
 }
 
 export interface CheckValueChain {
@@ -60,6 +61,11 @@ export function checkValue(value: any, path = "", expect = ""): CheckValueChain 
             } else if (type == "number") {
                 if (typeof value == "number") {
                     (callback as (value: number, expect: CheckValueChain) => void)(value, this)
+                    return finishedChain(path)
+                }
+            } else if (type == "boolean") {
+                if (typeof value == "boolean") {
+                    (callback as (value: boolean, expect: CheckValueChain) => void)(value, this)
                     return finishedChain(path)
                 }
             }
