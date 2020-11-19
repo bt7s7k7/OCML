@@ -64,7 +64,9 @@ export const EntityUpdateRoute = defineComponent({
                             {entity.value.attributeList.map(attribute => (
                                 <AttributeView attribute={attribute} data={data} key={attribute.name} />
                             ))}
-                            <pre>{JSON.stringify(data.value, undefined, 4)}</pre>
+                            <b-collapse id="json-collapse">
+                                <pre>{JSON.stringify(data.value, undefined, 4)}</pre>
+                            </b-collapse>
                         </b-col>
                     </b-row>
                     <b-row>
@@ -72,17 +74,19 @@ export const EntityUpdateRoute = defineComponent({
                             <b-btn type="submit" variant="success">{props.id == null ? "Create" : "Update"}</b-btn>
                             <b-btn to={`/entity/${entity.value.name}`} variant="secondary" class={["ml-2"]}>Cancel</b-btn>
                         </b-col>
-                        {props.id != null && (
-                            <b-col cols="auto">
-                                <b-btn variant="light" class={"bg-white"} on-click={() => ctx.root.$bvModal.show("delete-confirm")}>
+                        <b-col cols="auto">
+                            <b-btn variant="white" onClick={() => ctx.root.$emit('bv::toggle::collapse', 'json-collapse')}>
+                                <b-icon-code />
+                            </b-btn>
+                            {props.id != null && (
+                                <b-btn variant="white" on-click={() => ctx.root.$bvModal.show("delete-confirm")}>
                                     <b-icon-trash />
+                                    <b-modal id="delete-confirm" title="Confirm deletion" on-ok={() => deleteEntity()}>
+                                        Do you really want to delete this {entity.value.label}?
+                                    </b-modal>
                                 </b-btn>
-
-                                <b-modal id="delete-confirm" title="Confirm deletion" on-ok={() => deleteEntity()}>
-                                    Do you really want to delete this {entity.value.label}?
-                                </b-modal>
-                            </b-col>
-                        )}
+                            )}
+                        </b-col>
                     </b-row>
                 </b-form>
             </b-overlay>
