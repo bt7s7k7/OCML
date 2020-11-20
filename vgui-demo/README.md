@@ -1,19 +1,16 @@
-# vgui-demo
+# Vuetober UI Demo
 
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+1. Install packages
+   ```
+   yarn
+   ucpem install
+   ```
+2. Run dev-server
+   ```
+   yarn serve
+   ```
+3. Run backend
+   ```
+   cd ../blog/backend
+   php artisan serve
+   ```
